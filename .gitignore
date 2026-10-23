@@ -1,16 +1,19 @@
-# Local tooling
-node_modules/
-.preview/
-.task
-.DS_Store
-Thumbs.db
 
 # Local environment and secrets — this project should never need either
+# Local tooling
+# Logs and test output
+*.key
+*.log
+*.pem
+*.pyc
+.DS_Store
 .env
 .env.*
-*.pem
-*.key
-
-# Logs and test output
-*.log
+.preview/
+.task
+.venv/
+Thumbs.db
+__pycache__/
 coverage/
+dist/*.tmp
+node_modules/
