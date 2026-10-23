@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KDP Listing Kit | ASDALE DYNAMICS</title>
+  <meta name="description" content="A free, local-first workspace for preparing Amazon KDP book listings: title and subtitle limits, description HTML with live preview, seven keywords, categories, AI disclosure notes, and Markdown export.">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f7f1e5">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body id="top">
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-download" viewBox="0 0 24 24">
+      <path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 18v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="m5 12 4.5 4.5L19 6.5"/>
+    </symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24">
+      <path d="M4 12h16"/><path d="m14 6 6 6-6 6"/>
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 24 24">
+      <rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+    </symbol>
+    <symbol id="icon-copy" viewBox="0 0 24 24">
+      <rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/>
+    </symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 8h.01"/>
+    </symbol>
+    <symbol id="icon-external" viewBox="0 0 24 24">
+      <path d="M14 4h6v6"/><path d="m20 4-9 9"/><path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/>
+    </symbol>
+    <symbol id="icon-list" viewBox="0 0 24 24">
+      <path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>
+    </symbol>
+    <symbol id="icon-line-break" viewBox="0 0 24 24">
+      <path d="M4 6h16M4 12h9a4 4 0 0 1 0 8H8"/><path d="m11 17-3 3 3 3"/>
+    </symbol>
+    <symbol id="icon-spark" viewBox="0 0 24 24">
+      <path d="M12 3c.6 4.7 3.4 7.5 8 8-4.6.6-7.4 3.4-8 8-.6-4.6-3.4-7.4-8-8 4.6-.6 7.4-3.3 8-8Z"/><path d="M19 16.5c.2 1.4 1 2.2 2.5 2.5-1.5.2-2.3 1-2.5 2.5-.2-1.5-1-2.3-2.5-2.5 1.5-.3 2.3-1.1 2.5-2.5Z"/>
+    </symbol>
+    <symbol id="icon-warning" viewBox="0 0 24 24">
+      <path d="M12 4 3.5 19h17L12 4Z"/><path d="M12 9v4"/><path d="M12 16h.01"/>
+    </symbol>
+    <symbol id="icon-quill" viewBox="0 0 24 24">
+      <path d="M20 4C13 4.5 8 8 6 14l-2 6 6-2c6-2 9.5-7 10-14Z"/><path d="M4 20 15 9"/>
+    </symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to the listing workspace</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="KDP Listing Kit home">
+        <svg class="brand-mark" viewBox="0 0 48 48" role="img" aria-hidden="true">
+          <rect width="48" height="48" rx="14" fill="currentColor"/>
+          <path d="M12 16.5c4.4-1.9 8.2-1.1 12 1.3v16.5c-3.8-2.4-7.6-3.2-12-1.3V16.5Z" fill="#fff8ec"/>
+          <path d="M36 16.5c-4.4-1.9-8.2-1.1-12 1.3v16.5c3.8-2.4 7.6-3.2 12-1.3V16.5Z" fill="#f0d6b6"/>
+          <path d="M24 18v16" stroke="#a43e23" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M15.5 21.5c2.3-.6 4.1-.2 5.7.8M32.5 21.5c-2.3-.6-4.1-.2-5.7.8M15.5 25.5c2.3-.6 4.1-.2 5.7.8M32.5 25.5c-2.3-.6-4.1-.2-5.7.8" stroke="#b9a58a" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-lockup">
+          <span class="brand-org">Asdale Dynamics</span>
+          <span class="brand-name">KDP Listing Kit</span>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <p class="save-status" id="save-status" role="status" aria-live="polite">
+          <span class="save-dot" id="save-dot" aria-hidden="true"></span>
+          <span id="save-status-text">New local draft</span>
+        </p>
+        <button class="button button-primary button-compact" id="export-top" type="button">
+          <svg class="icon" aria-hidden="true"><use href="#icon-download"></use></svg>
+          <span>Export sheet</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page">
+    <noscript>
+      <div class="noscript-banner" role="note">
+        Live checks, local saving, and export need JavaScript. You can still read the KDP limits and guidance on this page.
+      </div>
+    </noscript>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span>A quiet desk for independent authors</p>
+        <h1 id="hero-title">Give your listing the same care as your <span class="highlight-word">book</span>.</h1>
+        <p class="hero-lede">
+          Check KDP's limits, shape a description that reads like you, plan seven useful keywords, and keep your
+          AI notes in one place. No account. No cloud. No loose ends.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary button-large" href="#book">
+            Start with book details
+            <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          </a>
+          <button class="button button-quiet" id="load-demo" type="button">Load a demo draft</button>
+        </div>
+        <ul class="trust-list" aria-label="What to expect">
+          <li><svg class="icon" aria-hidden="true"><use href="#icon-lock"></use></svg>Local-first by design</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg>Saves as you type</li>
+          <li><svg class="icon" aria-hidden="true"><use href="#icon-download"></use></svg>Markdown export</li>
+        </ul>
+      </div>
+
+      <aside class="limits-card" aria-labelledby="limits-title">
+        <div class="limits-card-top">
+          <p class="eyebrow eyebrow--light">KDP limits, at a glance</p>
+          <span class="limits-stamp">Reviewed Oct 2026</span>
+        </div>
+        <p class="limits-title" id="limits-title">The numbers, without the digging.</p>
+        <dl class="limits-list">
+          <div>
+            <dt>Title + subtitle</dt>
+            <dd><strong>200</strong><span>characters combined</span></dd>
+          </div>
+          <div>
+            <dt>Description</dt>
+            <dd><strong>4,000</strong><span>characters, HTML included</span></dd>
+          </div>
+          <div>
+            <dt>Keywords</dt>
+            <dd><strong>7 &times; 50</strong><span>slots &times; characters</span></dd>
+          </div>
+          <div>
+            <dt>Categories</dt>
+            <dd><strong>3</strong><span>shelves to choose</span></dd>
+          </div>
+        </dl>
+        <p class="limits-note">
+          Guidelines evolve. <a href="https://kdp.amazon.com/help/topic/G201189630" target="_blank" rel="noopener noreferrer">Confirm the current rules at KDP</a> before publishing.
+        </p>
+      </aside>
+    </section>
+
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Listing preparation overview">
+        <div class="progress-card">
+          <div class="progress-top">
+            <p class="eyebrow">Prep progress</p>
+            <span class="progress-badge" id="progress-badge">Just starting</span>
+          </div>
+          <p class="progress-title"><span id="progress-count">0</span> of 5 checks ready</p>
+          <div class="progress-track" id="prep-progress" role="progressbar" aria-label="Listing preparation checks" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+            <span id="progress-bar"></span>
+          </div>
+          <ol class="prep-list" id="prep-list">
+            <li class="prep-step" data-step="book">
+              <a href="#book">
+                <span class="step-marker" aria-hidden="true"><span class="step-index">1</span><svg class="icon step-check"><use href="#icon-check"></use></svg></span>
+                <span class="step-copy"><span class="step-name">Book details</span><span class="step-detail" id="step-detail-book">Add a title to begin.</span></span>
+                <span class="visually-hidden step-state" id="step-state-book">Not complete.</span>
+              </a>
+            </li>
+            <li class="prep-step" data-step="description">
+              <a href="#description">
+                <span class="step-marker" aria-hidden="true"><span class="step-index">2</span><svg class="icon step-check"><use href="#icon-check"></use></svg></span>
+                <span class="step-copy"><span class="step-name">Description</span><span class="step-detail" id="step-detail-description">No visible description yet.</span></span>
+                <span class="visually-hidden step-state" id="step-state-description">Not complete.</span>
+              </a>
+            </li>
+            <li class="prep-step" data-step="keywords">
+              <a href="#keywords">
+                <span class="step-marker" aria-hidden="true"><span class="step-index">3</span><svg class="icon step-check"><use href="#icon-check"></use></svg></span>
+                <span class="step-copy"><span class="step-name">Keywords</span><span class="step-detail" id="step-detail-keywords">No search phrases planned yet.</span></span>
+                <span class="visually-hidden step-state" id="step-state-keywords">Not complete.</span>
+              </a>
+            </li>
+            <li class="prep-step" data-step="categories">
+              <a href="#categories">
+                <span class="step-marker" aria-hidden="true"><span class="step-index">4</span><svg class="icon step-check"><use href="#icon-check"></use></svg></span>
+                <span class="step-copy"><span class="step-name">Categories</span><span class="step-detail" id="step-detail-categories">0 of 3 categories noted.</span></span>
+                <span class="visually-hidden step-state" id="step-state-categories">Not complete.</span>
+              </a>
+            </li>
+            <li class="prep-step" data-step="ai">
+              <a href="#ai">
+                <span class="step-marker" aria-hidden="true"><span class="step-index">5</span><svg class="icon step-check"><use href="#icon-check"></use></svg></span>
+                <span class="step-copy"><span class="step-name">AI disclosure</span><span class="step-detail" id="step-detail-ai">Decision needed.</span></span>
+                <span class="visually-hidden step-state" id="step-state-ai">Not complete.</span>
+              </a>
+            </li>
+          </ol>
+          <div class="aside-note">
+            <svg class="icon" aria-hidden="true"><use href="#icon-lock"></use></svg>
+            <p><strong>Stays in this browser.</strong> Your draft uses local storage only. Nothing is uploaded.</p>
+          </div>
+          <a class="aside-link" href="#export">
+            Jump to export and draft tools
+            <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          </a>
+        </div>
+      </aside>
+
+      <div class="content">
+        <section class="card" id="book" aria-labelledby="book-heading">
+          <header class="card-head">
+            <p class="card-kicker"><span>01</span>First impression</p>
+            <h2 id="book-heading">Title, subtitle, and byline</h2>
+            <p class="card-intro">
+              KDP counts your title and subtitle together. Read them as one sentence, keep the clearest promise
+              near the front, and give the right reader a reason to stop.
+            </p>
+          </header>
+
+          <div class="fields fields--book">
+            <div class="field field--full">
+              <div class="field-label-row">
+                <label for="book-title">Book title</label>
+                <span class="micro-count" id="title-count">0 characters</span>
+              </div>
+              <input id="book-title" data-bind="book.title" type="text" autocomplete="off" placeholder="The title readers will see" aria-describedby="title-feedback">
+            </div>
+            <div class="field">
+              <div class="field-label-row">
+                <label for="book-subtitle">Subtitle <span class="optional">optional</span></label>
+                <span class="micro-count" id="subtitle-count">0 characters</span>
+              </div>
+              <input id="book-subtitle" data-bind="book.subtitle" type="text" autocomplete="off" placeholder="The promise beneath the title" aria-describedby="title-feedback">
+            </div>
+            <div class="field">
+              <div class="field-label-row">
+                <label for="book-author">Author or pen name <span class="optional">optional</span></label>
+              </div>
+              <input id="book-author" data-bind="book.author" type="text" autocomplete="off" placeholder="For the preview and export" aria-describedby="author-hint">
+              <p class="field-help" id="author-hint">Not checked against KDP. Useful for your own sheet.</p>
+            </div>
+          </div>
+
+          <div class="limit-panel" id="title-limit-panel">
+            <div class="limit-panel-top">
+              <div>
+                <p class="limit-label">Title + subtitle</p>
+                <p class="limit-caption">One combined budget on KDP</p>
+              </div>
+              <p class="limit-value"><strong id="title-combined-count">0</strong><span> / 200</span></p>
+            </div>
+            <div class="meter" aria-hidden="true"><span id="title-meter-bar"></span></div>
+            <p class="field-feedback" id="title-feedback">KDP counts the title and subtitle together&mdash;200 characters in total.</p>
+          </div>
+
+          <aside class="guidance" aria-labelledby="title-guidance-title">
+            <div class="guidance-heading">
+              <svg class="icon" aria-hidden="true"><use href="#icon-quill"></use></svg>
+              <h3 id="title-guidance-title">A quick title taste test</h3>
+            </div>
+            <ul class="guidance-list">
+              <li>Say it out loud. Does it sound like a book you would pick up, or a search query wearing a hat?</li>
+              <li>Keep the phrase a reader would actually search near the front, without stuffing in every synonym.</li>
+              <li>Skip other people's trademarks, rank claims, price mentions, and HTML tags. KDP's guidelines rule those out.</li>
+            </ul>
+            <a class="text-link" href="https://kdp.amazon.com/help/topic/GW7J4WEKBVU25YEC" target="_blank" rel="noopener noreferrer">
+              Official title and subtitle guidance
+              <svg class="icon" aria-hidden="true"><use href="#icon-external"></use></svg>
+            </a>
+          </aside>
+        </section>
+
+        <section class="card card--description" id="description" aria-labelledby="description-heading">
+          <header class="card-head">
+            <p class="card-kicker"><span>02</span>The heart of the page</p>
+            <h2 id="description-heading">The book description</h2>
+            <p class="card-intro">
+              Write to one reader in plain language. KDP allows a small set of HTML tags; this editor checks
+              your markup, counts every character, and previews only what KDP lists as safe.
+            </p>
+          </header>
+
+          <div class="description-limit" id="description-limit-panel">
+            <div class="count-summary">
+              <p class="count-headline">
+                <strong id="description-count">0</strong>
+                <span>/ 4,000 characters</span>
+              </p>
+              <p class="count-subline">
+                HTML tags count too. Visible text: <span id="description-visible-count">0</span> characters,
+                <span id="description-word-count">0</span> words.
+              </p>
+            </div>
+            <div class="count-side">
+              <span class="state-pill" id="description-state">Start writing</span>
+              <p class="count-remaining" id="description-feedback">Use the toolbar for formatting, or paste your own KDP-safe HTML.</p>
+            </div>
+          </div>
+          <div class="meter meter--description" aria-hidden="true"><span id="description-meter-bar"></span></div>
+
+          <div class="editor-shell">
+            <div class="editor-pane">
+              <div class="pane-head">
+                <div>
+                  <h3>Write in KDP HTML</h3>
+                  <p>Formatting buttons insert tags KDP accepts.</p>
+                </div>
+                <span class="pane-badge">Source</span>
+              </div>
+              <div class="format-toolbar" role="toolbar" aria-label="Insert KDP-allowed formatting">
+                <button class="format-button" type="button" data-format="bold" aria-label="Bold" title="Bold">
+                  <span class="format-letter format-letter--bold" aria-hidden="true">B</span>
+                </button>
+                <button class="format-button" type="button" data-format="italic" aria-label="Italic" title="Italic">
+                  <span class="format-letter format-letter--italic" aria-hidden="true">I</span>
+                </button>
+                <button class="format-button" type="button" data-format="underline" aria-label="Underline" title="Underline">
+                  <span class="format-letter format-letter--underline" aria-hidden="true">U</span>
+                </button>
+                <span class="toolbar-rule" aria-hidden="true"></span>
+                <button class="format-button format-button--text" type="button" data-format="h4" aria-label="Heading 4" title="Heading 4">H4</button>
+                <button class="format-button format-button--text" type="button" data-format="h5" aria-label="Heading 5" title="Heading 5">H5</button>
+                <button class="format-button format-button--text" type="button" data-format="h6" aria-label="Heading 6" title="Heading 6">H6</button>
+                <span class="toolbar-rule" aria-hidden="true"></span>
+                <button class="format-button" type="button" data-format="ul" aria-label="Bulleted list" title="Bulleted list">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-list"></use></svg>
+                </button>
+                <button class="format-button format-button--text" type="button" data-format="ol" aria-label="Numbered list" title="Numbered list">1.</button>
+                <button class="format-button format-button--text" type="button" data-format="p" aria-label="Paragraph" title="Paragraph">&para;</button>
+                <button class="format-button" type="button" data-format="br" aria-label="Line break" title="Line break">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-line-break"></use></svg>
+                </button>
+              </div>
+              <label class="visually-hidden" for="description-input">Book description HTML</label>
+              <textarea id="description-input" data-bind="description" rows="16" spellcheck="true" aria-describedby="description-feedback editor-help description-markup-summary"></textarea>
+              <div class="editor-footer">
+                <p class="editor-help" id="editor-help">Raw line breaks collapse in HTML. Use the line-break or heading buttons.</p>
+                <p class="visible-count"><span id="description-visible-count-footer">0</span> visible characters &middot; <span id="description-word-count-footer">0</span> words</p>
+              </div>
+            </div>
+
+            <div class="preview-pane">
+              <div class="pane-head">
+                <div>
+                  <h3>Live preview</h3>
+                  <p>An illustrative reader view.</p>
+                </div>
+                <span class="live-indicator"><span aria-hidden="true"></span> Live</span>
+              </div>
+              <div class="preview-scroll" tabindex="0" role="region" aria-label="Live description preview">
+                <article class="preview-book">
+                  <p class="preview-imprint">Reader view</p>
+                  <h4 class="preview-title is-placeholder" id="preview-title">Your book title</h4>
+                  <p class="preview-subtitle" id="preview-subtitle" hidden></p>
+                  <p class="preview-author" id="preview-author" hidden></p>
+                  <div class="preview-rule" aria-hidden="true"></div>
+                  <div class="preview-description" id="preview-description"></div>
+                  <p class="preview-empty" id="preview-empty">
+                    Your description will appear here as you write. Try the eyebrow-raising first line first.
+                  </p>
+                </article>
+              </div>
+              <p class="preview-note">KDP's final layout and typography may differ from this preview.</p>
+            </div>
+          </div>
+
+          <div class="markup-report">
+            <div class="markup-top">
+              <div class="markup-status">
+                <svg class="icon" aria-hidden="true"><use href="#icon-check"></use></svg>
+                <p id="description-markup-summary">Allowed tags stay; everything else is flagged.</p>
+              </div>
+              <button class="button button-secondary button-small" id="clean-html" type="button" hidden>
+                <svg class="icon" aria-hidden="true"><use href="#icon-spark"></use></svg>
+                Clean HTML
+              </button>
+            </div>
+            <ul class="issue-list" id="description-issues" hidden></ul>
+
+            <details class="reference-details">
+              <summary>Which HTML tags does KDP allow?</summary>
+              <div class="reference-body">
+                <p>KDP's published list for descriptions: <code>&lt;br&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;b&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;u&gt;</code>, <code>&lt;h4&gt;</code>, <code>&lt;h5&gt;</code>, <code>&lt;h6&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;ul&gt;</code>, and <code>&lt;li&gt;</code>.</p>
+                <p>Attributes such as <code>style</code> or <code>class</code> are not part of the list and are stripped from the preview. The count still reflects your source HTML, just as KDP counts it.</p>
+                <a class="text-link" href="https://kdp.amazon.com/help/topic/G201189630" target="_blank" rel="noopener noreferrer">Official description formatting guide <svg class="icon" aria-hidden="true"><use href="#icon-external"></use></svg></a>
+              </div>
+            </details>
+          </div>
+
+          <aside class="guidance guidance--split" aria-labelledby="description-guidance-title">
+            <div class="guidance-heading">
+              <svg class="icon" aria-hidden="true"><use href="#icon-quill"></use></svg>
+              <h3 id="description-guidance-title">A shape that works</h3>
+            </div>
+            <ol class="number-list">
+              <li><strong>Open with the reader's problem or desire.</strong> One or two sentences is enough to earn the next line.</li>
+              <li><strong>Show the path.</strong> A short heading and a small list can make the book's promise easy to scan.</li>
+              <li><strong>Close with what changes.</strong> Tell them what they will be able to do, feel, or understand.</li>
+            </ol>
+          </aside>
+        </section>
+
+        <section class="card" id="keywords" aria-labelledby="keywords-heading">
+          <header class="card-head">
+            <p class="card-kicker"><span>03</span>Discovery</p>
+            <h2 id="keywords-heading">Seven keyword slots, with a job each</h2>
+            <p class="card-intro">
+              KDP gives you seven optional keyword fields with 50 characters each. Think of phrases a real reader
+              would type into Amazon&mdash;not a mound of repeated title words.
+            </p>
+          </header>
+
+          <div class="keyword-summary">
+            <p class="keyword-count"><strong id="keyword-filled">0</strong><span>of 7 slots used</span></p>
+            <p class="field-feedback" id="keyword-feedback">No search phrases planned yet. There is no need to fill all seven if the phrases are not useful.</p>
+          </div>
+
+          <ol class="keyword-list">
+            <li class="keyword-row" data-keyword-row="0">
+              <span class="keyword-index" aria-hidden="true">01</span>
+              <div class="keyword-field">
+                <label for="keyword-0">Keyword 1</label>
+                <input id="keyword-0" data-bind="keywords.0" type="text" autocomplete="off" placeholder="A phrase a reader might search" aria-describedby="keyword-count-0 keyword-feedback">
+              </div>
+              <span class="keyword-char-count" id="keyword-count-0">0 / 50</span>
+            </li>
+            <li class="keyword-row" data-keyword-row="1">
+              <span class="keyword-index" aria-hidden="true">02</span>
+              <div class="keyword-field">
+                <label for="keyword-1">Keyword 2</label>
+                <input id="keyword-1" data-bind="keywords.1" type="text" autocomplete="off" aria-describedby="keyword-count-1 keyword-feedback">
+              </div>
+              <span class="keyword-char-count" id="keyword-count-1">0 / 50</span>
+            </li>
+            <li class="keyword-row" data-keyword-row="2">
+              <span class="keyword-index" aria-hidden="true">03</span>
+              <div class="keyword-field">
+                <label for="keyword-2">Keyword 3</label>
+                <input id="keyword-2" data-bind="keywords.2" type="text" autocomplete="off" aria-describedby="keyword-count-2 keyword-feedback">
+              </div>
+              <span class="keyword-char-count" id="keyword-count-2">0 / 50</span>
+            </li>
+            <li class="keyword-row" data-keyword-row="3">
+              <span class="keyword-index" aria-hidden="true">04</span>
+              <div class="keyword-field">
+                <label for="keyword-3">Keyword 4</label>
+                <input id="keyword-3" data-bind="keywords.3" type="text" autocomplete="off" aria-describedby="keyword-count-3 keyword-feedback">
+              </div>
+              <span class="keyword-char-count" id="keyword-count-3">0 / 50</span>
+            </li>
+            <li class="keyword-row" data-keyword-row="4">
+              <span class="keyword-index" aria-hidden="true">05</span>
+              <div class="keyword-field">
+                <label for="keyword-4">Keyword 5</label>
+                <input id="keyword-4" data-bind="keywords.4" type="text" autocomplete="off" aria-describedby="keyword-count-4 keyword-feedback">
+              </div>
+              <span class="keyword-char-count" id="keyword-count-4">0 / 50</span>
+            </li>
+            <li class="keyword-row" data-keyword-row="5">
+              <span class="keyword-index" aria-hidden="true">06</span>
+              <div class="keyword-field">
+                <label for="keyword-5">Keyword 6</label>
+                <input id="keyword-5" data-bind="keywords.5" type="text" autocomplete="off" aria-describedby="keyword-count-5 keyword-feedback">
+              </div>
+              <span class="keyword-char-count" id="keyword-count-5">0 / 50</span>
+            </li>
+            <li class="keyword-row" data-keyword-row="6">
+              <span class="keyword-index" aria-hidden="true">07</span>
+              <div class="keyword-field">
+                <label for="keyword-6">Keyword 7</label>
+                <input id="keyword-6" data-bind="keywords.6" type="text" autocomplete="off" aria-describedby="keyword-count-6 keyword-feedback">
+              </div>
+              <span class="keyword-char-count" id="keyword-count-6">0 / 50</span>
+            </li>
+          </ol>
+
+          <div class="tip-grid">
+            <div class="tip-card">
+              <p class="tip-label">Try a mix</p>
+              <p>The problem, the reader, the format, and the adjacent interest. "Plain-English AI for busy parents" gives Amazon more to work with than "AI AI AI".</p>
+            </div>
+            <div class="tip-card">
+              <p class="tip-label">Keep it honest</p>
+              <p>Skip competitor names, trademarks, subjective claims, and words that do not describe the book. Each slot is precious; a wrong phrase is worse than an empty one.</p>
+            </div>
+          </div>
+
+          <a class="text-link" href="https://kdp.amazon.com/help/topic/G201097560" target="_blank" rel="noopener noreferrer">
+            Official metadata and keyword guidance
+            <svg class="icon" aria-hidden="true"><use href="#icon-external"></use></svg>
+          </a>
+        </section>
+
+        <section class="card" id="categories" aria-labelledby="categories-heading">
+          <header class="card-head">
+            <p class="card-kicker"><span>04</span>The right shelf</p>
+            <h2 id="categories-heading">Three shelves for the right readers</h2>
+            <p class="card-intro">
+              KDP lets you choose up to three categories per book. Note your best-fit shelves here while you
+              research, then pick the closest matches in KDP. The exact names in KDP's picker may differ.
+            </p>
+          </header>
+
+          <div class="fields fields--three">
+            <div class="field">
+              <label for="category-0">Category 1</label>
+              <input id="category-0" data-bind="categories.0" type="text" autocomplete="off" placeholder="e.g., Computers &amp; Technology">
+            </div>
+            <div class="field">
+              <label for="category-1">Category 2</label>
+              <input id="category-1" data-bind="categories.1" type="text" autocomplete="off" placeholder="The next best shelf">
+            </div>
+            <div class="field">
+              <label for="category-2">Category 3</label>
+              <input id="category-2" data-bind="categories.2" type="text" autocomplete="off" placeholder="An adjacent shelf">
+            </div>
+          </div>
+
+          <div class="field field--notes">
+            <label for="category-notes">Category notes <span class="optional">optional</span></label>
+            <textarea id="category-notes" data-bind="categoryNotes" rows="4" placeholder="Why does this book belong on each shelf? Any categories to compare later?"></textarea>
+            <p class="field-help">A little research now makes the KDP picker much less mysterious later.</p>
+          </div>
+
+          <aside class="guidance guidance--split" aria-labelledby="category-guidance-title">
+            <div class="guidance-heading">
+              <svg class="icon" aria-hidden="true"><use href="#icon-quill"></use></svg>
+              <h3 id="category-guidance-title">Browse like a reader</h3>
+            </div>
+            <ul class="guidance-list">
+              <li>Start where you think a reader would start, then follow the shelves down to the most specific honest fit.</li>
+              <li>Choose categories the book genuinely belongs in. The right shelf is better than the biggest one.</li>
+              <li>Write down the path while you browse; category labels and placements can shift over time.</li>
+            </ul>
+            <a class="text-link" href="https://kdp.amazon.com/help/topic/G200652170" target="_blank" rel="noopener noreferrer">
+              Official category guidance
+              <svg class="icon" aria-hidden="true"><use href="#icon-external"></use></svg>
+            </a>
+          </aside>
+        </section>
+
+        <section class="card card--ai" id="ai" aria-labelledby="ai-heading">
+          <header class="card-head">
+            <p class="card-kicker"><span>05</span>Honest metadata</p>
+            <h2 id="ai-heading">A clear AI disclosure plan</h2>
+            <p class="card-intro">
+              KDP asks about AI-generated content in the book itself. This worksheet helps you make the call
+              once, write it down, and walk into the publishing form knowing your answer.
+            </p>
+          </header>
+
+          <aside class="policy-note" aria-labelledby="policy-note-title">
+            <div class="policy-icon"><svg class="icon" aria-hidden="true"><use href="#icon-info"></use></svg></div>
+            <div>
+              <h3 id="policy-note-title">The short version</h3>
+              <p>
+                KDP asks authors to disclose <strong>AI-generated text, images, and translations</strong>.
+                AI-assisted work&mdash;editing, brainstorming, polish&mdash;does not require disclosure under
+                its current guidelines. Policies can change, so check the definitions before you publish.
+              </p>
+              <a class="text-link" href="https://kdp.amazon.com/help/topic/G200672390" target="_blank" rel="noopener noreferrer">
+                Read KDP's content guidelines
+                <svg class="icon" aria-hidden="true"><use href="#icon-external"></use></svg>
+              </a>
+            </div>
+          </aside>
+
+          <fieldset class="form-fieldset">
+            <legend>What's your plan?</legend>
+            <p class="fieldset-help">This is your own record. When you publish, answer KDP's question about the final book, not about this planning page.</p>
+            <div class="choice-grid">
+              <label class="choice-card">
+                <input type="radio" name="ai-decision" data-bind="ai.decision" data-value="none" value="none">
+                <span class="choice-content">
+                  <span class="choice-title">No AI-generated content</span>
+                  <span class="choice-hint">AI may have helped with editing or ideas, but none of its generated text, images, or translations are in the book.</span>
+                </span>
+              </label>
+              <label class="choice-card">
+                <input type="radio" name="ai-decision" data-bind="ai.decision" data-value="disclose" value="disclose">
+                <span class="choice-content">
+                  <span class="choice-title">Yes, I'll disclose</span>
+                  <span class="choice-hint">The book contains AI-generated text, images, or translations. I'll tell KDP when I publish.</span>
+                </span>
+              </label>
+              <label class="choice-card">
+                <input type="radio" name="ai-decision" data-bind="ai.decision" data-value="unsure" value="unsure" checked>
+                <span class="choice-content">
+                  <span class="choice-title">I still need to check</span>
+                  <span class="choice-hint">I'm not sure yet. I'll review KDP's definitions before I answer.</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="ai-columns">
+            <fieldset class="form-fieldset">
+              <legend>What does the book contain?</legend>
+              <p class="fieldset-help">Select every AI-generated content type that is in the final book.</p>
+              <div class="checkbox-stack">
+                <label class="checkbox-card">
+                  <input type="checkbox" id="ai-generated-text" data-bind="ai.generated.text">
+                  <span><strong>AI-generated text</strong><small>Passages or chapters created by a tool.</small></span>
+                </label>
+                <label class="checkbox-card">
+                  <input type="checkbox" id="ai-generated-images" data-bind="ai.generated.images">
+                  <span><strong>AI-generated images</strong><small>Cover art, illustrations, or other visuals created by a tool.</small></span>
+                </label>
+                <label class="checkbox-card">
+                  <input type="checkbox" id="ai-generated-translations" data-bind="ai.generated.translations">
+                  <span><strong>AI-generated translations</strong><small>A translation created or substantially drafted by a tool.</small></span>
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-fieldset">
+              <legend>Before you publish <span class="legend-count" id="ai-check-progress">0 of 5</span></legend>
+              <p class="fieldset-help">A final pass to keep your answer accurate and your conscience clear.</p>
+              <ul class="checklist">
+                <li>
+                  <label class="check-item">
+                    <input type="checkbox" id="ai-check-policy" data-bind="ai.checks.policy">
+                    <span>I reviewed KDP's current AI content guidelines.</span>
+                  </label>
+                </li>
+                <li>
+                  <label class="check-item">
+                    <input type="checkbox" id="ai-check-inventory" data-bind="ai.checks.inventory">
+                    <span>My content selections match the final version of the book.</span>
+                  </label>
+                </li>
+                <li>
+                  <label class="check-item">
+                    <input type="checkbox" id="ai-check-rights" data-bind="ai.checks.rights">
+                    <span>I have the rights to use all text and images in the book.</span>
+                  </label>
+                </li>
+                <li>
+                  <label class="check-item">
+                    <input type="checkbox" id="ai-check-facts" data-bind="ai.checks.facts">
+                    <span>I checked facts, names, and claims that AI helped produce.</span>
+                  </label>
+                </li>
+                <li>
+                  <label class="check-item">
+                    <input type="checkbox" id="ai-check-revisit" data-bind="ai.checks.revisit">
+                    <span>I'll revisit this answer if the book changes before publishing.</span>
+                  </label>
+                </li>
+              </ul>
+            </fieldset>
+          </div>
+
+          <div class="ai-status" id="ai-status" role="status" aria-live="polite">
+            <div class="ai-status-icon"><svg class="icon" aria-hidden="true"><use href="#icon-info"></use></svg></div>
+            <div>
+              <p class="ai-status-title" id="ai-status-title">Decision needed</p>
+              <p class="ai-status-detail" id="ai-status-detail">Read the short version above, then record your AI disclosure plan.</p>
+            </div>
+          </div>
+
+          <div class="field field--notes">
+            <label for="ai-notes">Disclosure notes <span class="optional">optional, stays local</span></label>
+            <textarea id="ai-notes" data-bind="ai.notes" rows="3" placeholder="A short record for future-you: which tools helped, what they produced, what you changed."></textarea>
+            <p class="field-help field-help--warning">
+              <svg class="icon" aria-hidden="true"><use href="#icon-lock"></use></svg>
+              Keep it to a brief work note. Never paste API keys, passwords, or private reader data here.
+            </p>
+          </div>
+        </section>
+
+        <section class="card card--export" id="export" aria-labelledby="export-heading">
+          <header class="card-head">
+            <p class="card-kicker"><span>06</span>Keep a copy</p>
+            <h2 id="export-heading">Your listing sheet, ready to keep</h2>
+            <p class="card-intro">
+              Export a Markdown copy of everything on this page. It is plain text, so it opens anywhere and
+              stays readable long after this browser tab is gone.
+            </p>
+          </header>
+
+          <div class="export-stats" aria-label="Current listing summary">
+            <div class="export-stat">
+              <span>Title + subtitle</span>
+              <strong id="export-stat-title">0 / 200</strong>
+            </div>
+            <div class="export-stat">
+              <span>Description</span>
+              <strong id="export-stat-description">0 / 4,000</strong>
+            </div>
+            <div class="export-stat">
+              <span>Keywords</span>
+              <strong id="export-stat-keywords">0 of 7</strong>
+            </div>
+            <div class="export-stat">
+              <span>AI disclosure</span>
+              <strong id="export-stat-ai">Needs review</strong>
+            </div>
+          </div>
+
+          <div class="export-panel">
+            <div class="export-copy">
+              <h3>What's in the sheet</h3>
+              <ul class="export-includes">
+                <li>Title, subtitle, byline, and character counts</li>
+                <li>Description HTML, plain-text preview, and markup notes</li>
+                <li>All seven keyword slots and category research</li>
+                <li>Your AI disclosure plan and publish checklist</li>
+                <li>Any prep checks that still deserve a look</li>
+              </ul>
+              <p class="export-note" id="export-readiness-note">You can export at any time. The sheet marks what is still open.</p>
+            </div>
+            <div class="export-actions">
+              <button class="button button-primary button-large" id="download-markdown" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#icon-download"></use></svg>
+                Download Markdown sheet
+              </button>
+              <button class="button button-secondary" id="copy-markdown" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#icon-copy"></use></svg>
+                Copy Markdown
+              </button>
+              <p class="export-privacy"><svg class="icon" aria-hidden="true"><use href="#icon-lock"></use></svg> The file is created in your browser.</p>
+            </div>
+          </div>
+
+          <details class="draft-tools">
+            <summary>Draft tools</summary>
+            <div class="draft-tools-body">
+              <div>
+                <p class="draft-tools-title">Start fresh</p>
+                <p>Clearing removes this listing's saved data from this browser. Download a sheet first if you want to keep it.</p>
+              </div>
+              <button class="button button-danger-quiet" id="clear-draft" type="button">Clear this draft</button>
+            </div>
+          </details>
+        </section>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <p class="footer-org">ASDALE DYNAMICS, LLC</p>
+          <p>Plain-English AI education, useful tools, and books for real life.</p>
+          <p class="footer-small">Built in Indiana. Made to be used, not admired.</p>
+        </div>
+        <div class="footer-about">
+          <p class="footer-heading">About this kit</p>
+          <p>KDP Listing Kit is a free, local-first planning aid from ASDALE DYNAMICS, LLC. It is not affiliated with Amazon or Kindle Direct Publishing and does not guarantee approval.</p>
+          <p class="footer-small">KDP limits reviewed October 22, 2026. Amazon's guidelines can change&mdash;confirm them in KDP before publishing.</p>
+        </div>
+        <div class="footer-links">
+          <p class="footer-heading">Official KDP references</p>
+          <ul>
+            <li><a href="https://kdp.amazon.com/help/topic/GW7J4WEKBVU25YEC" target="_blank" rel="noopener noreferrer">Titles and subtitles</a></li>
+            <li><a href="https://kdp.amazon.com/help/topic/G201189630" target="_blank" rel="noopener noreferrer">Description HTML</a></li>
+            <li><a href="https://kdp.amazon.com/help/topic/G201097560" target="_blank" rel="noopener noreferrer">Metadata and keywords</a></li>
+            <li><a href="https://kdp.amazon.com/help/topic/G200652170" target="_blank" rel="noopener noreferrer">Categories</a></li>
+            <li><a href="https://kdp.amazon.com/help/topic/G200672390" target="_blank" rel="noopener noreferrer">AI content guidelines</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 ASDALE DYNAMICS, LLC</p>
+        <p>Made for authors who would rather write than wrestle forms.</p>
+      </div>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

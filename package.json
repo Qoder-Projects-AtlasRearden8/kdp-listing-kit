@@ -1,0 +1,15 @@
+{
+  "name": "kdp-listing-kit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A local-first checklist and editor for preparing Amazon KDP book listings.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test",
+    "check": "node --test && node scripts/static-check.mjs"
+  }
+}

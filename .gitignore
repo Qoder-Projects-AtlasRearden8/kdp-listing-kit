@@ -1,0 +1,16 @@
+# Local tooling
+node_modules/
+.preview/
+.task
+.DS_Store
+Thumbs.db
+
+# Local environment and secrets — this project should never need either
+.env
+.env.*
+*.pem
+*.key
+
+# Logs and test output
+*.log
+coverage/
