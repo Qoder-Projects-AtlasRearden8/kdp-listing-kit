@@ -303,8 +303,8 @@ export function sanitizeDescription(input) {
   const hasVisibleText = plainText.trim().length > 0;
 
   let state = 'ok';
-  if (!source.trim() || !hasVisibleText) state = 'empty';
-  else if (overBy > 0) state = 'over';
+  if (overBy > 0) state = 'over';
+  else if (!source.trim() || !hasVisibleText) state = 'empty';
   else if (rawCount >= WARN_AT.description) state = 'near';
 
   const hasMarkupIssues = (

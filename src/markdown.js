@@ -122,10 +122,10 @@ export function buildListingSheet(draftInput, options = {}) {
   lines.push(`- **Source length:** ${formatCount(description.rawCount)} / ${formatCount(LIMITS.description)} characters (HTML included)`);
   lines.push(`- **Approx. visible length:** ${formatCount(description.plainCount)} characters`);
   lines.push(`- **Approx. word count:** ${formatCount(description.wordCount)}`);
-  const lengthVerdict = description.overBy > 0
-    ? `Over by ${formatCount(description.overBy)} characters`
-    : 'Within the 4,000-character limit';
-  lines.push(`- **Length check:** ${description.hasVisibleText ? lengthVerdict : 'No visible description yet'}`);
+  let lengthVerdict = 'Within the 4,000-character limit';
+  if (description.overBy > 0) lengthVerdict = `Over by ${formatCount(description.overBy)} characters`;
+  else if (!description.hasVisibleText) lengthVerdict = 'No visible description yet';
+  lines.push(`- **Length check:** ${lengthVerdict}`);
   lines.push(`- **Markup check:** ${description.hasMarkupIssues ? 'Needs cleanup' : 'KDP-safe'}`);
   lines.push('');
 

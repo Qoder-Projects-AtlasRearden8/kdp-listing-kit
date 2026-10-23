@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "description": "A local-first checklist and editor for preparing Amazon KDP book listings.",
+  "license": "MIT",
+  "author": "Asdale Dynamics, LLC",
   "engines": {
     "node": ">=20"
   },

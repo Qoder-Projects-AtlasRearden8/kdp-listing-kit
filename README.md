@@ -1,68 +1,122 @@
 # KDP Listing Kit
 
-A free, local-first workbook for preparing an Amazon KDP book listing. Check title limits, write a description against KDP's HTML allowlist, plan seven keywords, note categories, and record an AI-disclosure plan — then export the whole thing as a Markdown sheet.
+**A free, local-first desk for preparing an Amazon KDP book listing.** Check title and subtitle limits, write a description against KDP's HTML allowlist, plan seven keywords, note categories, and record an AI-disclosure plan. When the thinking is done, export a clean Markdown sheet.
 
-Built by **ASDALE DYNAMICS, LLC** as part of a plain-English AI and author-tools toolkit. No account, no server, no tracking, and no build step.
+Built by **ASDALE DYNAMICS, LLC**. No account, no server, no tracking, no build step, and no npm dependencies.
 
-## What it does
+## Why this kit exists
 
-- **Title and subtitle checker** — counts title and subtitle together against KDP's 200-character combined budget, with early warnings and over-limit states.
-- **Description editor** — a source editor for KDP's allowed HTML with a live, sanitized preview, raw and visible character counts, word count, over-limit warnings, and a one-click **Clean HTML** action. Unsupported tags, attributes, comments, and script/style contents are flagged and removed from the preview.
-- **Seven-keyword planner** — seven 50-character slots with live length feedback, duplicate detection, and guidance on giving each slot a distinct job.
-- **Category notes** — three category fields plus a free-form research note area.
-- **AI-disclosure checklist** — records a disclosure decision, flags conflicting answers, tracks which AI-generated content types are present, and includes a five-item pre-publish checklist.
-- **Local drafts** — saves automatically to `localStorage`, shows save state, restores after reload, and can clear the local draft.
-- **Markdown export** — downloads a complete listing sheet, including counts, description HTML, plain-text preview, markup notes, keywords, categories, AI plan, and prep status. Also offers copy-to-clipboard.
-- **Demo draft** — loads a fictional sample so the workflow can be explored immediately.
-- **Accessible, responsive UI** — keyboard-friendly controls, labelled fields, live regions, skip link, and layouts for desktop and mobile.
+Publishing a book is hard enough. The listing form is a pile of small, easy-to-miss rules: a combined title budget, a description that accepts only certain HTML, seven keyword slots, three category choices, and an AI-disclosure question that deserves a real answer rather than a guess.
+
+KDP Listing Kit puts those decisions in one quiet workspace that saves as you type. It is a planning aid — it does not submit anything to Amazon and cannot guarantee approval.
+
+## At a glance
+
+| Part of the listing | What the kit does |
+| --- | --- |
+| Title and subtitle | Live separate and combined counts against KDP's 200-character shared limit, with near-limit and over-limit warnings |
+| Description | Source editor for KDP-allowed HTML, live sanitized preview, raw + visible + word counts, 4,000-character limit, markup warnings, Clean HTML |
+| Keywords | Seven 50-character slots, live counts, duplicate detection, and guidance for giving each slot a distinct job |
+| Categories | Three optional category fields plus a free-form research notes area |
+| AI disclosure | Decision, AI-generated content types, conflict checks, five pre-publish checks, status summary, and private notes |
+| Drafts | Debounced autosave to `localStorage`, restore after reload, and a confirmed clear action |
+| Export | Download or copy a complete Markdown listing sheet with counts, HTML, notes, and prep status |
+
+## How to use it
+
+1. Open the app and either start fresh or select **Load a demo draft** to explore a fictional listing.
+2. Fill in the book title and subtitle. Watch the combined meter: KDP counts them as one 200-character budget.
+3. Write the description in the source pane. Use the toolbar for KDP-safe tags. Check the live preview and clean up any flagged markup.
+4. Plan keywords one slot at a time. The kit flags over-length phrases and repeated ideas.
+5. Add category research and complete the AI-disclosure section. Conflicting answers are called out before they reach the export.
+6. Select **Download Markdown sheet** or **Copy Markdown**. Use **Clear this draft** only after exporting if you want to keep a copy.
+
+Drafts save automatically in the browser after each edit. The header shows whether the latest change has been saved.
+
+## What is checked automatically
+
+- **Title + subtitle:** 200 characters combined, counted as typed, with warnings starting at 180.
+- **Description:** 4,000 characters including HTML, with warnings starting at 3,600.
+- **Description HTML:** only these tags are kept in the preview: `br`, `p`, `b`, `em`, `i`, `u`, `h4`, `h5`, `h6`, `ol`, `ul`, and `li`. Attributes, unsupported tags, comments, event handlers, and script/style contents are removed from the preview and reported. **Clean HTML** rewrites the source into the safe subset.
+- **Keywords:** seven slots of 50 characters each, exact duplicates detected after trimming, collapsing spaces, and ignoring case.
+- **AI disclosure:** the answer must be internally consistent. “No AI-generated content” conflicts with any selected AI content type; “I will disclose” requires at least one content type; a final decision requires all five pre-publish checks.
+- **Prep progress:** book details, description, keywords, categories, and AI disclosure are tracked independently. One category is enough to complete the category step because KDP allows up to three.
 
 ## Run locally
 
-Requires Node.js 20 or newer (no npm dependencies).
+Requires **Node.js 20 or newer**. There is nothing to install.
 
 ```bash
 npm start
 ```
 
-Open <http://127.0.0.1:4173/>. Use `PORT=4174 npm start` if the default port is busy.
+Open <http://127.0.0.1:4173/>. If that port is busy, run `PORT=4174 npm start`.
 
-The app is plain HTML, CSS, and ES modules. It can also be opened from any static file server; opening `index.html` directly from the filesystem may block ES modules in some browsers.
+The app is plain HTML, CSS, and ES modules. Serve the folder with any static file server. Opening `index.html` directly from the filesystem may be blocked by browser module security rules.
 
 ## Test
 
 ```bash
 npm test          # Node's built-in test runner
-npm run check     # tests plus static integrity, link, ARIA, and secret checks
+npm run check     # tests plus static integrity, link, ARIA, module, and secret checks
 ```
 
-The suite covers text metrics, keyword analysis, HTML sanitization, the description editor helpers, readiness logic, AI disclosure logic, draft normalization and storage, and Markdown export.
+Coverage includes title and keyword metrics, HTML sanitization and raw-text handling, editor selection helpers, readiness rules, AI-disclosure logic, draft normalization and storage, Markdown generation and escaping, and the five-step prep state.
+
+The Chrome walkthrough used during development covers the full UI: editing, preview, counts, markup cleanup, localStorage restore, export contents, demo loading, reset, and console health. It lives outside the repository because it requires a local Chrome binary.
 
 ## Deploy to GitHub Pages
 
-There is no build step and no remote asset dependency.
+There is no build step and no remote dependency.
 
-1. Push the repository to GitHub (after reviewing what you are publishing).
-2. In the repository, open **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**, select `main`, and use the repository root (`/`).
-4. Save. The included `.nojekyll` file tells GitHub Pages to serve the files as-is.
+1. Push the repository to GitHub after reviewing what will be public.
+2. Open **Settings → Pages**.
+3. Under **Build and deployment**, choose **Deploy from a branch**.
+4. Select the `main` branch and the repository root (`/`).
+5. Save. The included `.nojekyll` file tells Pages to serve the files unchanged.
 
-All asset paths are relative, so the app also works from a project subpath such as `https://<user>.github.io/kdp-listing-kit/`.
+All paths are relative, so the app also works from a project subpath such as `https://<user>.github.io/kdp-listing-kit/`.
+
+## Browser support
+
+The kit uses ES modules, `localStorage`, and standard DOM APIs. It is intended for current desktop and mobile versions of Chrome, Edge, Firefox, and Safari. It was end-to-end tested in Chrome 155 at desktop and mobile widths; the other browsers were not individually automated in this repository.
+
+## Content rules the kit does not enforce
+
+Length and HTML checks are only part of KDP's policy. The kit does **not** automatically detect every content restriction. In particular:
+
+- KDP's description guidelines prohibit URLs, phone numbers, review quotes, promotional language, and emojis. Follow the official guidance rather than relying on the character counter alone.
+- Keywords should describe the book honestly. Avoid competitor names, trademarks, unrelated phrases, and misleading claims.
+- Title and subtitle rules also prohibit promotional claims, price mentions, and HTML.
+- Category names and placements in KDP's picker can change; the fields here are research notes, not a live category feed.
+- AI policy can change. The checklist records your decision; it does not determine whether your book complies.
+
+Official references are linked inside the app and in the exported sheet.
+
+## Privacy and safety
+
+- Drafts stay in the browser's `localStorage`. Nothing is uploaded or synced.
+- The page's Content Security Policy blocks network connections (`connect-src 'none'`). There are no analytics, remote fonts, or third-party scripts.
+- The preview is built from an allowlist, never by injecting the raw description. Event handlers, attributes, unsupported tags, comments, and script/style contents cannot reach the rendered preview.
+- Do not paste API keys, passwords, or private reader data into notes fields.
+
+Clearing browser site data, using private browsing, or hitting a storage quota can remove a draft. Export a Markdown sheet when a listing matters.
 
 ## Project layout
 
 ```
-index.html            Page shell and all sections
+index.html            Page shell and all listing sections
 styles.css            Visual design and responsive layout
 app.js                DOM wiring, rendering, saving, export
 src/
-  ai.js               AI-disclosure evaluation
+  ai.js               AI-disclosure evaluation and conflict checks
   constants.js        KDP limits, allowlisted tags, storage key
   demo.js             Fictional demo draft
-  draft.js            Draft creation and normalization
-  editor.js           Selection wrapping and list helpers
-  markdown.js         Markdown sheet and file-name generation
+  draft.js            Draft creation, normalization, empty-state detection
+  editor.js           Selection wrapping and list formatting
+  markdown.js         Markdown sheet and safe file names
   readiness.js        Five-step preparation checklist
-  sanitize.js         KDP HTML tokenizer, sanitizer, plain text
+  sanitize.js         KDP HTML tokenizer, sanitizer, and plain text
   storage.js          localStorage load/save/clear
   text.js             Title and keyword metrics
 test/                 node:test suites
@@ -72,23 +126,16 @@ scripts/
 assets/favicon.svg    Favicon
 ```
 
-## Privacy and safety
-
-- Draft data stays in the browser's `localStorage` and never leaves the machine.
-- The page's Content Security Policy blocks network connections (`connect-src 'none'`); there are no analytics, fonts, or remote scripts.
-- The preview is built from an allowlist, never by injecting the raw description. Event handlers, attributes, unsupported tags, comments, and script/style contents cannot reach the rendered preview.
-- Do not store API keys, passwords, or private reader data in the notes fields.
-
 ## KDP limits and disclaimer
 
-The kit uses the commonly published KDP limits reviewed on October 22, 2026:
+Limits used by the kit were reviewed on **October 22, 2026**:
 
 - Title and subtitle: 200 characters combined
-- Description: 4,000 characters, including HTML
-- Keywords: 7 slots of up to 50 characters each
-- Categories: up to 3
+- Description: 4,000 characters including HTML
+- Keywords: seven slots of up to 50 characters each
+- Categories: up to three
 
-Amazon can change its limits, category names, and AI-content policy at any time. This tool is a planning aid, not publishing, legal, or compliance advice, and it is not affiliated with Amazon or Kindle Direct Publishing. Confirm current requirements in KDP before publishing.
+Amazon can change limits, category names, and AI policy at any time. This tool is a planning aid, not publishing, legal, or compliance advice, and it is not affiliated with Amazon or Kindle Direct Publishing. Confirm current requirements in KDP before publishing.
 
 ## License
 

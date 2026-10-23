@@ -127,18 +127,37 @@ test('readiness fails for descriptions that are over-limit or use unsupported HT
   assert.match(readiness.steps.find((step) => step.id === 'description').detail, /unsupported/);
 });
 
-test('readiness fails for duplicate keywords and missing categories', () => {
+test('readiness fails for duplicate keywords', () => {
   const duplicate = createDemoDraft();
   duplicate.keywords[1] = duplicate.keywords[0];
-  let readiness = evaluateReadiness(duplicate);
+  const readiness = evaluateReadiness(duplicate);
   assert.equal(readiness.steps.find((step) => step.id === 'keywords').done, false);
   assert.match(readiness.steps.find((step) => step.id === 'keywords').detail, /repeat/);
+});
 
-  const categories = createDemoDraft();
-  categories.categories[2] = '';
-  readiness = evaluateReadiness(categories);
-  assert.equal(readiness.steps.find((step) => step.id === 'categories').done, false);
-  assert.match(readiness.steps.find((step) => step.id === 'categories').detail, /2 of 3/);
+test('one category completes the category step because KDP allows up to three', () => {
+  const draft = createDemoDraft();
+  draft.categories[1] = '';
+  draft.categories[2] = '';
+  let readiness = evaluateReadiness(draft);
+  let step = readiness.steps.find((item) => item.id === 'categories');
+  assert.equal(step.done, true);
+  assert.match(step.detail, /1 of 3 categories noted/);
+
+  draft.categories[0] = '   ';
+  readiness = evaluateReadiness(draft);
+  step = readiness.steps.find((item) => item.id === 'categories');
+  assert.equal(step.done, false);
+  assert.match(step.detail, /No categories noted/);
+});
+
+test('readiness reports an over-limit description even when it has no visible text', () => {
+  const draft = createDemoDraft();
+  draft.description = `<p>${' '.repeat(4001)}</p>`;
+  const readiness = evaluateReadiness(draft);
+  const step = readiness.steps.find((item) => item.id === 'description');
+  assert.equal(step.done, false);
+  assert.match(step.detail, /Over the limit/);
 });
 
 test('readiness fails while the AI checklist is incomplete', () => {

@@ -24,8 +24,8 @@ export function evaluateReadiness(draft) {
     && !description.hasMarkupIssues
   );
   let descriptionDetail = `${formatCount(description.rawCount)} / ${formatCount(LIMITS.description)} characters, HTML included.`;
-  if (!description.hasVisibleText) descriptionDetail = 'No visible description yet.';
-  else if (description.overBy > 0) descriptionDetail = `Over the limit by ${formatCount(description.overBy)} characters.`;
+  if (description.overBy > 0) descriptionDetail = `Over the limit by ${formatCount(description.overBy)} characters.`;
+  else if (!description.hasVisibleText) descriptionDetail = 'No visible description yet.';
   else if (description.hasMarkupIssues) descriptionDetail = 'Clean up unsupported or risky markup.';
 
   const keywordsReady = keywords.filled > 0 && !keywords.hasIssues;
@@ -39,8 +39,11 @@ export function evaluateReadiness(draft) {
     keywordDetail = 'No search phrases planned yet.';
   }
 
-  const categoriesReady = filledCategories === LIMITS.categories;
-  const categoryDetail = `${filledCategories} of ${LIMITS.categories} categories noted.`;
+  const categoriesReady = filledCategories > 0;
+  let categoryDetail = `${filledCategories} of ${LIMITS.categories} categories noted.`;
+  if (filledCategories === 0) categoryDetail = 'No categories noted yet. Add at least one.';
+  else if (filledCategories < LIMITS.categories) categoryDetail = `${filledCategories} of ${LIMITS.categories} categories noted. Adding another is optional.`;
+  else categoryDetail = `All ${LIMITS.categories} categories noted.`;
 
   const steps = [
     {

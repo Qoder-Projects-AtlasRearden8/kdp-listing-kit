@@ -1,60 +1,69 @@
 # KDP Listing Kit — Status
 
 **Date:** October 23, 2026
-**State:** Complete and locally verified
+**State:** Complete, critically reviewed, and locally verified
 **Owner:** Asdale Dynamics, LLC
 
 ## What was built
 
-A dependency-free static web app for preparing Amazon KDP book listings, ready to serve from GitHub Pages (repository root, no build step).
+A dependency-free static web app for preparing Amazon KDP book listings, ready to serve from GitHub Pages at the repository root (no build step).
 
-- **Title and subtitle checker** — live per-field and combined counts against the 200-character combined limit, near/over states, meter, `aria-invalid`, and plain-language feedback.
-- **Description editor** — KDP-HTML source editor with a formatting toolbar (`b`, `i`, `u`, `h4`–`h6`, `p`, `br`, ordered/unordered lists), live sanitized preview, raw and visible character counts, word count, 4,000-character enforcement, markup issue reporting, and a **Clean HTML** action.
-- **Seven-keyword planner** — seven 50-character slots with count feedback, over-limit detection, case/space-insensitive duplicate detection, and slot-specific guidance.
-- **Category notes** — three category fields plus a free-form notes area and browser-research guidance.
-- **AI-disclosure checklist** — disclosure decision (disclose / none / still checking), AI-generated content types, conflict detection, five pre-publish checks, status summary, and local notes.
-- **Five-step prep sidebar** — book details, description, keywords, categories, and AI disclosure with progress bar and live step details.
-- **Local drafts** — debounced `localStorage` autosave, save status and timestamp, reload restoration, and a confirmed clear action.
-- **Markdown export** — downloadable and copyable listing sheet with counts, description HTML, KDP-safe version, markup notes, keywords, categories, AI plan, and prep checklist.
-- **Demo data** — a fictional sample draft, plus responsive desktop/mobile layout and accessible markup.
-- **Extras added during finish pass** — `README.md`, MIT `LICENSE`, this status file, and a sanitizer fix (below).
+- **Title and subtitle checker** — live per-field and combined counts against KDP's 200-character combined limit; near-limit and over-limit states; meter and accessible invalid state.
+- **Description editor** — KDP-HTML source editor with a formatting toolbar (`b`, `i`, `u`, `h4`–`h6`, `p`, `br`, ordered/unordered lists), live sanitized preview, raw/visible/word counts, 4,000-character enforcement, markup issue reporting, and **Clean HTML**.
+- **Seven-keyword planner** — seven 50-character slots with live counts, over-limit detection, case/whitespace-insensitive duplicate detection, and slot guidance.
+- **Category notes** — three optional category fields, free-form research notes, and browsing guidance.
+- **AI-disclosure checklist** — decision, AI-generated content types, conflicting-answer detection, five pre-publish checks, status summary, and private notes.
+- **Five-step prep sidebar** — book details, description, keywords, categories, and AI disclosure, with progress bar and live details.
+- **Local drafts** — debounced `localStorage` autosave, save status/timestamp, reload restoration, and confirmed draft clearing.
+- **Markdown export** — download/copy of a complete listing sheet: counts, description HTML, KDP-safe version, markup notes, keywords, categories, AI plan, prep checklist, and official KDP links.
+- **Demo draft** — fictional sample so the full workflow can be explored immediately.
+- **Accessible responsive UI** — skip link, labelled fields, live regions, keyboard-friendly controls, and desktop/mobile layouts.
 
-Privacy posture: no network calls, no analytics, no accounts, no API keys, no dependencies; CSP restricts connections to `'none'`.
+Privacy: no accounts, analytics, remote assets, network calls, or secrets. The Content Security Policy blocks connections.
 
 ## How to run
 
 ```bash
 npm start        # http://127.0.0.1:4173/
-npm test         # unit tests (Node built-in test runner)
-npm run check    # unit tests + static integrity/safety checks
+npm test         # Node.js built-in test runner
+npm run check    # tests + static integrity/safety checks
 ```
 
-Requires Node.js 20+. For GitHub Pages: Settings → Pages → Deploy from a branch → `main` → `/` (root). `.nojekyll` is included.
+Requires Node.js 20+. There are no npm dependencies to install.
+
+For GitHub Pages: **Settings → Pages → Deploy from a branch → `main` → `/` (root)**. `.nojekyll` is included, and all asset paths are relative.
 
 ## Verification results
 
 | Check | Result |
 | --- | --- |
-| `npm test` (Node 20.19.2) | **69 passed, 0 failed** |
-| `npm run check` | **69 tests + all 8 static-check groups passed** |
-| Headless Chrome 155 end-to-end run | **53 browser checks passed, 0 failed**, no console/page errors |
-| Visual review | Desktop 1440px full page and 390px mobile layouts inspected; responsive stacking and typography are clean |
+| `npm test` (Node 20.19.2) | **73 passed, 0 failed** |
+| `npm run check` | **73 tests + all 8 static-check groups passed** |
+| Headless Chrome 155 end-to-end run | **54 browser checks passed, 0 failed**, no console/page errors |
+| Visual review | Desktop 1440px full page and mobile 390px layouts inspected; responsive stacking and typography are clean |
+| KDP reference links | All official help URLs checked return HTTP 200 (five used in-app plus the keyword help page) |
 
-The static-check suite verifies dependency-free scripts, local asset resolution, in-page anchors, `noopener` on new-tab links, unique IDs and ARIA/label targets, document/CSP basics, every `app.js` DOM hook, all ES module imports, and absence of network calls or secrets.
+The static suite verifies dependency-free scripts, local asset resolution, in-page anchors, `noopener` on new-tab links, unique IDs and ARIA/label targets, document/CSP basics, every `app.js` DOM hook, all ES module imports, and absence of network calls or secrets. A separate audit found only one `innerHTML` sink, and it receives only sanitizer output.
 
-The headless-browser run exercised: initial render; title/subtitle counts and over-limit states; description counts, preview allowlisting, markup issue reporting, Clean HTML, toolbar insertion, and over-limit state; keyword length/duplicate states; categories; AI disclosure conflict-free completion and progress; localStorage save and reload restoration; Markdown download and content; demo loading; draft clearing; and console health. Verification was performed with Chrome DevTools Protocol against the local server; the harness lives outside the repository and is not shipped.
+The headless-browser run exercised: initial render; title/subtitle counts and over-limit states; description counts, preview allowlisting, raw-text removal, markup reporting, Clean HTML, toolbar insertion, and over-limit state; keyword length/duplicate states; category completion with one filled category; AI disclosure completion and progress; localStorage save and reload restoration; Markdown download and content; demo loading; draft clearing; and console health. The harness runs outside the repository because it requires a local Chrome binary.
 
-### Fix made during verification
+## Changes made during this critical review
 
-The sanitizer originally removed `<script>`/`<style>` tags but leaked their contents into the preview as visible text (escaped, so not executable, but misleading). It now consumes raw-text element content entirely, so script/style bodies appear in neither the safe preview nor the plain-text count. Two regression tests were added; the unit total is now 69.
+- **Corrected category readiness.** KDP allows *up to* three categories, but the prep step previously required all three. One genuine category now completes the step; three empty or whitespace-only fields do not. The sidebar copy reflects that additional categories are optional.
+- **Corrected an over-limit edge case.** A description with more than 4,000 raw characters but no visible text (for example, a huge whitespace/HTML dump) was labelled “empty” instead of over-limit. It is now flagged consistently in the editor, readiness detail, and Markdown export.
+- **Added content-rule guidance.** The description guidance and README now note KDP's non-HTML restrictions (URLs, phone numbers, review quotes, promotional language, emojis), which character counting cannot detect.
+- **Expanded the README** into a full usage, testing, deployment, browser-support, privacy, and limitations guide.
+- **Added package metadata** (`license`, `author`) and documented that one category is sufficient.
+- Added four regression tests for the corrected readiness and over-limit behavior.
 
 ## Known gaps
 
 - **Not published.** Per the brief, nothing was pushed, no remote was created, and GitHub Pages has not been enabled.
-- **Single local draft.** The app stores one draft per browser. There is no multi-draft library, import, or backup other than the exported Markdown (which is not re-importable).
-- **Browser automation is external.** The 53-check Chrome run is not part of `npm test` because it needs Chrome/CDP and is intentionally dependency-free in-repo. CI coverage currently means unit + static checks.
-- **KDP knowledge is dated.** Limits, category labels, and AI policy were reviewed October 22, 2026 and are shown with that date. Amazon can change them; the app links to official help but does not fetch live data.
-- **Planning aid, not advice.** The AI-disclosure section helps authors prepare an answer; it does not determine policy compliance. The preview is illustrative and KDP's final rendering may differ.
-- **Clipboard behavior varies.** Copy uses the async Clipboard API with an `execCommand` fallback; some hardened browsers may block both, in which case the download works.
-- **Storage can disappear.** Private browsing, cleared site data, or storage quotas can remove the draft; the UI warns when storage is unavailable.
-- **Manual Pages setup.** No deployment workflow is included, so publishing requires using GitHub's Pages settings after an intentional push.
+- **Content policy is not automatically enforced.** The app checks length, HTML allowlisting, duplicates, and AI-answer consistency, but not URLs, phone numbers, review quotes, promotional language, emojis, keyword relevance, or trademark issues. Authors must follow the linked KDP guidance.
+- **Single local draft.** One draft per browser; no multi-draft library, import, or re-import of an exported sheet. Clearing site data or private browsing can remove drafts.
+- **Browser automation is external.** Unit + static checks are the committed test suite. The 54-check Chrome walkthrough requires a local Chrome binary and is not part of `npm test`.
+- **Other browsers are not individually automated.** The app targets current Chrome, Edge, Firefox, and Safari; Chrome 155 was tested end-to-end.
+- **KDP knowledge is dated.** Limits and policy were reviewed October 22, 2026 and cross-checked against official references on October 23, 2026. Amazon can change them without notice; the app does not fetch live policy data.
+- **Planning aid, not advice.** The AI section helps prepare an answer and does not determine compliance. The preview is illustrative; KDP's final layout may differ.
+- **Clipboard behavior varies.** Copy uses the async Clipboard API with an `execCommand` fallback; hardened browsers may block both, in which case download still works.
+- **Manual Pages setup.** No deployment workflow is included, so publication requires using GitHub's Pages settings after an intentional push.

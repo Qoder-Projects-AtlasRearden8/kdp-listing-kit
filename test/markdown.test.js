@@ -68,6 +68,16 @@ test('includes an over-limit warning and raw HTML counts', () => {
   assert.match(sheet, /Length check:\*\* Over by/);
 });
 
+test('reports an over-limit description even when no text is visible', () => {
+  const draft = createDraft();
+  draft.book.title = 'Whitespace Book';
+  draft.description = `<p>${' '.repeat(4001)}</p>`;
+  const sheet = buildListingSheet(draft, { now: NOW });
+
+  assert.match(sheet, /Length check:\*\* Over by/);
+  assert.doesNotMatch(sheet, /Length check:\*\* No visible description yet/);
+});
+
 test('adds a cleaned KDP-safe block when markup needs attention', () => {
   const draft = createDraft();
   draft.book.title = 'Markup Book';

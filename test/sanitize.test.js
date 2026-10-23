@@ -130,6 +130,13 @@ test('reports near-limit and over-limit descriptions', () => {
   assert.equal(over.remaining, 0);
 });
 
+test('flags over-limit raw markup even without visible text', () => {
+  const result = sanitizeDescription(`<p>${' '.repeat(4001)}</p>`);
+  assert.equal(result.hasVisibleText, false);
+  assert.equal(result.state, 'over');
+  assert.ok(result.overBy > 0);
+});
+
 test('empty and tag-only descriptions have no visible text', () => {
   const empty = sanitizeDescription('');
   assert.equal(empty.state, 'empty');
